@@ -1,0 +1,144 @@
+:root {
+  --primary-color-branding: #00B4C5;
+  --secondary-color-branding: #8c15e9;
+  --tertiary-color-branding: #B1E1EA;
+  --details-color-branding: #30373F;
+  --replacement-color-branding: #8DD2DD;
+}
+body{
+  background-color:#FFFFFF;
+  font-family: "Lato",sans-serif;
+  letter-spacing: 0.7px;
+}
+/*layout desktop*/
+img.logo{
+  margin: auto;
+  display:block;
+  width:170px;
+  height:170px;
+  margin-bottom: -36px;
+  margin-top: -36px;
+}
+.nav_bar{
+ display: flex;
+ flex-wrap: wrap;
+ background-color: var(--secondary-color-branding);
+ color: var(--tertiary-color-branding);
+}
+.menuList{
+ display: flex;
+ gap: 20px;
+ list-style: none;
+ padding: 30px;
+ font-size: 1.2rem;
+ font-weight:400;
+}
+
+.menuClickeableLink{
+  color: var(--tertiary-color-branding);
+  text-decoration: none;
+}
+
+.menuClickeableLink:hover{
+  color:var(--primary-color-branding);
+}
+
+.search-container{
+ align-self: center;
+ margin-left: auto;
+ margin-right: 20px;
+}
+.search-bar{
+  width: 300px;
+  border:none;
+  padding: 11px;
+ font-size: 1.2rem;
+}
+.search-btn{
+  background-color: var(--primary-color-branding);
+  border: none;
+  font-size: 1.2rem;
+  padding:11px 30px;
+  color: var(--tertiary-color-branding);
+  cursor: pointer;
+}
+
+.search-btn:hover{
+  background-color: var(--tertiary-color-branding);
+  color: var(--primary-color-branding);
+}
+
+.title{
+  margin: 50px auto;
+  text-align: center;
+  font-size: 45px;
+}
+
+/*Registration form */
+form.form-container{
+  background-color:var(--primary-color-branding);
+  height: 800px;
+  width:  650px;
+  display: block;
+  margin: auto;
+  margin-bottom: 50px;
+  border-radius: 30px;
+  padding-top: 40px;
+}
+
+.userClass,
+.nameClass,
+.surnameClass,
+.passwordClass,
+.suburbClass,
+.postcodeClass,
+.stateClass,
+.mobileClass,
+.addressClass,
+.inputRegForm{
+  margin-left: 60px;
+}
+
+.inputRegForm{
+  width: 500px;
+  height: 40px;
+  font-size: 1rem;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+.newAccount{
+  display: block;
+  margin: auto;
+  background-color: var(--secondary-color-branding);
+  color: white;
+  border: none;
+  padding: 20px 100px;
+  font-size: 1rem;
+  margin-top: 40px;
+  cursor: pointer;
+}
+.newAccount:hover{
+  background-color: var(--tertiary-color-branding);
+  color: var(--secondary-color-branding);
+}
+.secondary-btn{
+  margin-top: 20px;
+  margin-left: 75px;
+  background-color: var(--replacement-color-branding);
+  border: none;
+  cursor: pointer;
+  padding: 15px;
+}
+
+.secondary-btn:hover{
+  background-color: var(--secondary-color-branding);
+  color: var(--tertiary-color-branding);
+}
+
+/*Footer*/
+footer{
+  background-color: var(--secondary-color-branding);
+  padding: 30px;
+  text-align: center;
+  color: var(--tertiary-color-branding);
+}
