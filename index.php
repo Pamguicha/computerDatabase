@@ -23,7 +23,7 @@ require_once("dbConnection.php");
   ?>
   <h1 class="title">Create an account</h1>
   <main class="container-registration">
-    <form action="addAction.php" method="post" name="add" class="form-container">
+    <form action="add.php" method="post" name="add" class="form-container">
       <label class="userClass" for="username">Username:
         <br>
         <input class="inputRegForm" type="text" name="username">
@@ -69,9 +69,17 @@ require_once("dbConnection.php");
         <input class="inputRegForm" type="text" name="mobilephone">
       </label>
       <br>
-      <input class="newAccount" type="submit" name="submit" value="Add">
+      <input class="newAccount" type="submit" name="NewAccount" value="NewAccount">
       <br>
     </form>
+    <div name="OutputMessage">
+      <?php
+      if (isset($_GET['message'])) {
+        $message = urldecode($_GET['message']);
+        echo $message;
+      }
+      ?>
+    </div>
   </main>
 
   <?php
