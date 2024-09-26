@@ -78,6 +78,8 @@ require_once("dbConnection.php");
         $message = urldecode($_GET['message']);
         echo $message;
       }
+
+
       ?>
     </div>
   </main>

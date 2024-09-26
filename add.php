@@ -18,7 +18,7 @@ if (filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST") {
   if (filter_input(INPUT_POST, "NewAccount")) {
     newAccount();
 
-    // Redirect back to index.php with the message
+    // Redirect back to index.php 
     header("Location: index.php?message=" . urlencode($message));
     exit;
 
@@ -63,9 +63,9 @@ function newAccount()
 
     //Test if INSERT statement worked
     if (!$stmt) {
-      $message = "An error ocurred. A new account could not be created";
+      $message = "<h2><font color='red'>An error ocurred. A new account could not be created</h2>";
     } else {
-      $message = "A new account was created";
+      $message = "<h2><font color='green'>A new account was created</h2>";
     }
 
   } catch (PDOException $e) {
