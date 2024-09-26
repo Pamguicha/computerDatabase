@@ -17,7 +17,6 @@ $message = "";
 if (filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST") {
   if (filter_input(INPUT_POST, "NewAccount")) {
     newAccount();
-
     // Redirect back to index.php 
     header("Location: index.php?message=" . urlencode($message));
     exit;
@@ -44,6 +43,17 @@ function newAccount()
   // connect to database
   try {
     require_once "dbconnection.php";
+    //To avoid duplicate usernames
+    $query = $conn->prepare("SELECT COUNT(*) FROM user WHERE username = :username");
+    $query->bindParam(":username", $username);
+    $query->execute();
+    $count = $query->fetchColumn();
+
+    if ($count > 0) {
+      $message = "Username already existed! Please choose another one";
+      return;
+    }
+
     //SQL INSERT statement
     $query = "INSERT INTO user (username, firstname, surname, password, address, suburb, postcode, state, mobilephone) VALUES (:username, :firstname, :surname, :password, :address , :suburb, :postcode, :state , :mobilephone);";
     $stmt = $conn->prepare($query);
@@ -74,4 +84,5 @@ function newAccount()
 
   $conn = null;
 }
+
 
