@@ -50,7 +50,12 @@ function newAccount()
     $count = $query->fetchColumn();
 
     if ($count > 0) {
-      $message = "Username already existed! Please choose another one";
+      $message = "Can't create account, your username already existed! Please choose another one";
+      return;
+    }
+    //Password Must be at least 8 characters in length
+    if (strlen($password) <= 8) {
+      $message = "Password must be more than 8 characters always";
       return;
     }
 
