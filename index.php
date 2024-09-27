@@ -11,6 +11,19 @@
   <title>Registration form | Computer Force</title>
 </head>
 <?php
+session_start();
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
+$firstName = isset($_SESSION['firstName']) ? $_SESSION['firstName'] : '';
+$surname = isset($_SESSION['surname']) ? $_SESSION['surname'] : '';
+$password = isset($_SESSION['password']) ? $_SESSION['password'] : '';
+$address = isset($_SESSION['address']) ? $_SESSION['address'] : '';
+$suburb = isset($_SESSION['suburb']) ? $_SESSION['suburb'] : '';
+$postcode = isset($_SESSION['postcode']) ? $_SESSION['postcode'] : '';
+$state = isset($_SESSION['state']) ? $_SESSION['state'] : '';
+$mobilephone = isset($_SESSION['mobilephone']) ? $_SESSION['mobilephone'] : '';
+
+//Clear the session data after use
+session_unset();
 //Include the database connection file
 require_once("dbConnection.php");
 
@@ -26,47 +39,47 @@ require_once("dbConnection.php");
     <form action="add.php" method="post" name="add" class="form-container">
       <label class="userClass" for="username">Username:
         <br>
-        <input class="inputRegForm" type="text" name="username">
+        <input class="inputRegForm" type="text" name="username" value="<?php echo $username; ?>">
       </label>
       <br>
       <label class="nameClass" for="firstname">First Name:
         <br>
-        <input class="inputRegForm" type="text" name="firstname">
+        <input class="inputRegForm" type="text" name="firstName" value="<?php echo $firstName; ?>">
       </label>
       <br>
-      <label class="surnameClass" for="surname">Surname:
+      <label class=" surnameClass" for="surname">Surname:
         <br>
-        <input class="inputRegForm" type="text" name="surname">
+        <input class="inputRegForm" type="text" name="surname" value="<?php echo $surname; ?>">
       </label>
       <br>
       <label class="passwordClass" for="password">Password:
         <br>
-        <input class="inputRegForm" type="password" name="password">
+        <input class="inputRegForm" type="password" name="password" value="<?php echo $password; ?>">
       </label>
       <br>
       <label class="addressClass" for="address">Address:
         <br>
-        <input class="inputRegForm" type="text" name="address">
+        <input class="inputRegForm" type="text" name="address" value="<?php echo $address; ?>">
       </label>
       <br>
       <label class="suburbClass" for="suburb">Suburb:
         <br>
-        <input class="inputRegForm" type="text" name="suburb">
+        <input class="inputRegForm" type="text" name="suburb" value="<?php echo $suburb; ?>">
       </label>
       <br>
       <label class="postcodeClass" for="postcode">Postcode:
         <br>
-        <input class="inputRegForm" type="number" name="postcode">
+        <input class="inputRegForm" type="number" name="postcode" value="<?php echo $postcode; ?>">
       </label>
       <br>
       <label class="stateClass" for="state">State:
         <br>
-        <input class="inputRegForm" type="text" name="state">
+        <input class="inputRegForm" type="text" name="state" value="<?php echo $state; ?>">
       </label>
       <br>
       <label class="mobileClass" for="mobilephone">Mobilephone:
         <br>
-        <input class="inputRegForm" type="text" name="mobilephone">
+        <input class="inputRegForm" type="text" name="mobilephone" value="<?php echo $mobilephone; ?>">
       </label>
       <br>
       <input class="newAccount" type="submit" name="NewAccount" value="NewAccount">
