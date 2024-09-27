@@ -17,15 +17,18 @@ $message = "";
 if (filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST") {
   if (filter_input(INPUT_POST, "NewAccount")) {
     newAccount();
-    // Redirect back to index.php 
-    header("Location: index.php?message=" . urlencode($message));
-    exit;
-
   }
+  if (filter_input(INPUT_POST, "checkDetails")) {
+    displayDetails();
+  }
+  // Redirect back to index.php 
+  header("Location: index.php?message=" . urlencode($message));
+  exit;
+
 }
 
-//function newAccount
 
+//function newAccount
 function newAccount()
 {
   global $username, $firstName, $surname, $password, $address, $suburb, $postcode, $state, $mobilephone, $message;
@@ -90,4 +93,41 @@ function newAccount()
   $conn = null;
 }
 
+//function displayDetails
 
+function displayDetails()
+{
+  global $username, $firstName, $surname, $password, $address, $suburb, $postcode, $state, $mobilephone, $message;
+
+  // get the username value
+  $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_STRING);
+  //connect to database
+  try {
+    require_once "dbconnection.php";
+
+    //SQL SELECT statement
+    $stmt = $conn->query("SELECT * FROM user WHERE username=" . $username);
+    $result = $stmt->fetch();
+
+    //Test if SELECT statement worked
+    if ($result == null) {
+      $message = "An error ocurred. The username doesn't exist or has been entered incorrectly. Please check again";
+    } else {
+      $username = $result[0];
+      $firstName = $result[1];
+      $surname = $result[2];
+      $password = $result[3];
+      $address = $result[4];
+      $suburb = $result[5];
+      $postcode = $result[6];
+      $state = $result[7];
+      $mobilephone = $result[8];
+
+    }
+
+  } catch (PDOException $e) {
+    $message = "Database connection failed with the following error: " . $e->getMessage();
+  }
+  $conn = null;
+
+}

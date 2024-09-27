@@ -71,6 +71,9 @@ require_once("dbConnection.php");
       <br>
       <input class="newAccount" type="submit" name="NewAccount" value="NewAccount">
       <br>
+      <br>
+      <input class="displayData" type="submit" name="checkDetails" value="Display your details">
+      <br>
     </form>
     <div name="OutputMessage">
       <?php
