@@ -87,6 +87,10 @@ require_once("dbConnection.php");
       <br>
       <input class="displayData" type="submit" name="checkDetails" value="Display your details">
       <br>
+      <input class="editData" type="submit" name="editData" value="Edit your details">
+      <br>
+      <input class="deleteBtn" type="submit" name="deleteData" value="Delete your account">
+
     </form>
     <div name="OutputMessage">
       <?php

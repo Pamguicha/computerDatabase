@@ -26,9 +26,15 @@ if (filter_input(INPUT_SERVER, "REQUEST_METHOD") == "POST") {
     displayDetails();
   }
 
+  if (filter_input(INPUT_POST, "editData")) {
+    editDetails();
+  }
+
+  if (filter_input(INPUT_POST, "deleteData")) {
+    deleteAccount();
+  }
 
 }
-
 
 //function newAccount
 function newAccount()
@@ -136,5 +142,68 @@ function displayDetails()
   // Redirect back to index.php with message (if needed)
   header("Location: index.php?message=" . urlencode($message));
   exit;
+
+}
+
+//function editDetails
+function editDetails()
+{
+  global $username, $firstName, $surname, $password, $address, $suburb, $postcode, $state, $mobilephone, $message;
+  // get the inputted values
+  $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_STRING);
+  $firstName = filter_input(INPUT_POST, "firstName", FILTER_SANITIZE_STRING);
+  $surname = filter_input(INPUT_POST, "surname", FILTER_SANITIZE_STRING);
+  $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
+  $address = filter_input(INPUT_POST, "address", FILTER_SANITIZE_STRING);
+  $suburb = filter_input(INPUT_POST, "suburb", FILTER_SANITIZE_STRING);
+  $postcode = filter_input(INPUT_POST, "postcode", FILTER_SANITIZE_STRING);
+  $state = filter_input(INPUT_POST, "state", FILTER_SANITIZE_STRING);
+  $mobilephone = filter_input(INPUT_POST, "mobilephone", FILTER_SANITIZE_STRING);
+
+  //connect to database
+
+  try {
+    require_once "dbconnection.php";
+    //Determine if Username is valid or not
+    $stmt = $conn->prepare("SELECT * FROM user WHERE username = :username");
+    $stmt->bindParam(":username", $username);
+    $result = $stmt->fetch();
+
+
+    //if IF is valid then undertake edit
+    if ($result !== null) {
+      //SQL UPDATE statement
+      $stmt = $conn->prepare("UPDATE user SET firstName = :firstName, surname = :surname, password = :password, address = :address, suburb = :suburb, postcode = :postcode, state = :state, mobilephone = :mobilephone WHERE username = :username");
+
+      $stmt->bindParam(":firstName", $firstName);
+      $stmt->bindParam(":surname", $surname);
+      $stmt->bindParam(":password", $password);
+      $stmt->bindParam(":address", $address);
+      $stmt->bindParam(":suburb", $suburb);
+      $stmt->bindParam(":postcode", $postcode);
+      $stmt->bindParam(":state", $state);
+      $stmt->bindParam(":mobilephone", $mobilephone);
+      $stmt->bindParam(":username", $username);
+
+      $stmt->execute();
+      $message = "<h1><font color='red'>Your account has been successfully updated!</h1>";
+
+    } else {
+      $message = "An error ocurred. The username is not valid. You can only edit your data with a registered username";
+    }
+
+  } catch (PDOException $e) {
+    $message = "Database connection failed with the following error: " . $e->getMessage();
+  }
+  // Redirect back to index.php with message (if needed)
+  header("Location: index.php?message=" . urlencode($message));
+  exit;
+
+}
+
+//function deleteAccount
+
+function deleteAccount()
+{
 
 }
