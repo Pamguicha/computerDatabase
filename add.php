@@ -61,7 +61,7 @@ function newAccount()
     $count = $query->fetchColumn();
 
     if ($count > 0) {
-      $message = "Can't create account, your username already existed! Please choose another one";
+      $message = "Can't create an account, your username already existed! Please choose another one";
       return;
     }
     //Password Must be at least 8 characters in length
@@ -205,5 +205,61 @@ function editDetails()
 
 function deleteAccount()
 {
+  global $username, $firstName, $surname, $password, $address, $suburb, $postcode, $state, $mobilephone, $message;
+  // get the inputted values
+  $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_STRING);
+  $firstName = filter_input(INPUT_POST, "firstName", FILTER_SANITIZE_STRING);
+  $surname = filter_input(INPUT_POST, "surname", FILTER_SANITIZE_STRING);
+  $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
+  $address = filter_input(INPUT_POST, "address", FILTER_SANITIZE_STRING);
+  $suburb = filter_input(INPUT_POST, "suburb", FILTER_SANITIZE_STRING);
+  $postcode = filter_input(INPUT_POST, "postcode", FILTER_SANITIZE_STRING);
+  $state = filter_input(INPUT_POST, "state", FILTER_SANITIZE_STRING);
+  $mobilephone = filter_input(INPUT_POST, "mobilephone", FILTER_SANITIZE_STRING);
 
+  //connect to database
+  try {
+    require_once "dbconnection.php";
+
+    //Determine if username is valid or not
+    $stmt = $conn->prepare("SELECT * FROM user WHERE username = :username");
+    $stmt->bindParam(":username", $username);
+    $stmt->execute();
+    $result = $stmt->fetch();
+
+    //if username is valid then delete the record
+    if ($result !== false) {
+      //SQL DELETE statement
+      $stmt = $conn->prepare("DELETE FROM user WHERE username = :username");
+      $stmt->bindParam(":username", $username, PDO::PARAM_STR);
+      $result = $stmt->execute();
+
+      //Test if DELETE statement worked
+      if ($result) {
+        $message = "The account with the username of " . $username . " was deleted successfully";
+        // clear the global variable values
+        $username = "";
+        $firstName = "";
+        $surname = "";
+        $address = "";
+        $suburb = "";
+        $postcode = "";
+        $state = "";
+        $mobilephone = "";
+        $password = "";
+
+      } else {
+        $message = "An error ocurred. The username is not valid. You can only delete an account with a valid username";
+      }
+    } else {
+      $message = "Thr username is not valid. Not account was found to delete ";
+    }
+  } catch (PDOException $e) {
+    $message = "Database connection failed with the following error " . $e->getMessage();
+  }
+  // Redirect back to index.php with message (if needed)
+  header("Location: index.php?message=" . urlencode($message));
+  exit;
 }
+
+
